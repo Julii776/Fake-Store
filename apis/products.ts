@@ -1,6 +1,6 @@
 import { apiClient } from '@/apis/client';
 
-import { ApiResponse } from '@/types/api';
+import { ApiResponse, SortOrder } from '@/types/api';
 
 export interface Product {
   id: number;
@@ -15,6 +15,9 @@ export interface Product {
   };
 }
 
-export const getProducts = async (): Promise<ApiResponse<Product[]>> => {
-  return apiClient(`/products`);
+export const getProducts = async (
+  sort?: SortOrder,
+): Promise<ApiResponse<Product[]>> => {
+  const query = sort ? `?sort=${sort}` : '';
+  return apiClient(`/products${query}`);
 };
