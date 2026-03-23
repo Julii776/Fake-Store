@@ -1,5 +1,7 @@
-import { getProducts } from '@/apis/products';
+import { getCategories } from '@/apis/categories';
+import { getProducts, Product } from '@/apis/products';
 
+import FilterByCategory from '@/components/products/filter-by-category';
 import Pagination from '@/components/products/pagination';
 import ProductGrid from '@/components/products/product-grid';
 import SortBy from '@/components/products/sort-by';
@@ -23,17 +25,27 @@ export default async function ProductsPage({ searchParams }: PageProps) {
   const category = params.category ?? 'all';
   const page = Math.max(1, parseInt(params.page ?? '1', 10) || 1);
 
-  const productsRes = await getProducts(sort);
+  const [productsRes, categoriesRes] = await Promise.all([
+    getProducts(sort),
+    getCategories(),
+  ]);
 
   const allProducts = productsRes.data ?? [];
+  const categories = categoriesRes.data ?? [];
 
-  const totalPages = getTotalPages(allProducts.length, PRODUCTS_PER_PAGE);
+  const filteredProducts: Product[] =
+    category === 'all'
+      ? allProducts
+      : allProducts.filter((p) => p.category === category);
+
+  const totalPages = getTotalPages(filteredProducts.length, PRODUCTS_PER_PAGE);
   const safePage = Math.min(page, Math.max(1, totalPages));
-  const pageProducts = paginate(allProducts, safePage);
+  const pageProducts = paginate(filteredProducts, safePage);
 
   return (
-    <>
-      <div className="flex justify-end w-full">
+    <div className="pb-6">
+      <div className="flex justify-end w-full gap-4">
+        <FilterByCategory categories={categories} currentCategory={category} />
         <SortBy currentSort={sort} />
       </div>
       <ProductGrid products={pageProducts} />
@@ -46,6 +58,6 @@ export default async function ProductsPage({ searchParams }: PageProps) {
           category={category}
         />
       )}
-    </>
+    </div>
   );
 }
