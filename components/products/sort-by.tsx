@@ -20,7 +20,7 @@ export default function SortBy({ currentSort }: SortByProps) {
   };
 
   return (
-    <div className="mb-4 border border-gray-400 rounded p-2 flex items-center">
+    <div className="border border-gray-400 rounded p-2 flex items-center">
       <label className="mr-2 text-sm font-medium text-gray-900">Sort by:</label>
       <select
         value={currentSort}
