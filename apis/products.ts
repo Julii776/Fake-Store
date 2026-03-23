@@ -21,3 +21,9 @@ export const getProducts = async (
   const query = sort ? `?sort=${sort}` : '';
   return apiClient(`/products${query}`);
 };
+
+export async function getProductById(
+  id: number,
+): Promise<ApiResponse<Product>> {
+  return apiClient<Product>(`/products/${id}`);
+}
