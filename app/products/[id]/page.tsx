@@ -1,16 +1,12 @@
-import {
-  ArrowLeft,
-  RefreshCw,
-  Shield,
-  ShoppingCart,
-  Truck,
-} from 'lucide-react';
+import { ArrowLeft, RefreshCw, Shield, Truck } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { getProductById } from '@/apis/products';
 
+import AddToCart from '@/components/cart/add-to-cart';
 import StarRating from '@/components/products/star-rating';
+
 import { APP_ROUTES } from '@/constants/routes';
 
 interface ProductPageProps {
@@ -91,12 +87,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {product.description}
             </p>
 
-            <button className="flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3 bg-amber-600 hover:bg-amber-500 active:bg-amber-700 text-white font-semibold text-sm rounded transition-colors cursor-pointer mb-6">
-              <ShoppingCart size={16} />
-              Add to Cart
-            </button>
+            <AddToCart product={product} />
 
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-3 mt-4">
               {[
                 {
                   icon: Truck,
