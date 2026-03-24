@@ -15,9 +15,9 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       href={APP_ROUTES.PRODUCT.getPath(product.id)}
-      className="group block h-full rounded-xl focus-visible:ring-2 focus-visible:ring-amber-400"
+      className="group block h-full rounded focus-visible:ring-2 focus-visible:ring-amber-400"
     >
-      <article className="flex h-full flex-col overflow-hidden rounded-xl border border-gray-400 bg-white transition hover:-translate-y-1 hover:shadow-md">
+      <article className="flex h-full flex-col overflow-hidden rounded border border-gray-400 bg-white transition hover:-translate-y-1 hover:shadow-md">
         <div className="flex h-52 items-center justify-center bg-gray-50 p-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
