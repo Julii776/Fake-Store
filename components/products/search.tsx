@@ -1,5 +1,7 @@
 'use client';
 
+import { getCategories } from '@/apis/categories';
+import { getProducts } from '@/apis/products';
 import { Search, X } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -18,6 +20,22 @@ export default function SearchProducts({ currentQuery }: SearchProductsProps) {
   useEffect(() => {
     setValue(currentQuery);
   }, [currentQuery]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [productsRes, categoriesRes] = await Promise.all([
+          getProducts('asc'),
+          getCategories(),
+        ]);
+        console.log(productsRes, categoriesRes);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const pushQuery = (q: string) => {
     const params = new URLSearchParams(searchParams.toString());
