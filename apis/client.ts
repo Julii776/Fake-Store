@@ -27,6 +27,12 @@ export const apiClient = async <T>(
     });
 
     if (!response.ok) {
+      const rawText = await response.text();
+      console.error(
+        `[apiClient] ${endpoint} → ${response.status} ${response.statusText}`,
+        rawText,
+      );
+
       return {
         data: null,
         error: {
