@@ -47,6 +47,8 @@ export default async function ProductsPage({ searchParams }: PageProps) {
     getCategories(),
   ]);
 
+  console.log('Fetched products:', productsRes);
+
   const allProducts = productsRes.data ?? [];
   const categories = categoriesRes.data ?? [];
 
